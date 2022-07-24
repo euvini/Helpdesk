@@ -5,7 +5,28 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#202024",
+      "resizeMode": "contain"
+    },
+    "plugins": [
+      "@react-native-firebase/app"
+    ],
+    "android": {
+      "package": "com.helpdesk",
+      "googleServicesFile": "./google-services.json",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#202024"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.helpdesk",
+      "googleServicesFile": "./GoogleService-Info.plist"
+    }
   },
   "name": "Helpdesk"
 }
