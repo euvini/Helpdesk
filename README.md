@@ -1,9 +1,9 @@
 ![](https://github.com/euvini/Helpdesk/blob/main/Capa.png)
 
-###Projeto
+### Projeto
 A aplicação para gerenciar em tempo real solicitações de manutenção e suporte a equipamentos.
 
-###Stack
+### Stack
 
 - React Native
 - Typescript
@@ -14,7 +14,7 @@ A aplicação para gerenciar em tempo real solicitações de manutenção e supo
 - Firebase Firestore com Real Time updates
 - e mais...
 
-###Funcionalidades
+### Funcionalidades
 
 - Autenticação de usuários
 - Cadastro de novos usuários
