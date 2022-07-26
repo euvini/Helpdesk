@@ -84,7 +84,7 @@ export function Details() {
             .doc(orderId)
             .get()
             .then((doc) => {
-                const { patrimony, description, status, created_at, closed_at, solution } = doc.data()
+                const { patrimony, description, status, created_at, closed_at, solution, uid } = doc.data()
                 const closed = closed_at ? dateFormat(closed_at) : null
                 setOrder({
                     id: doc.id,
@@ -93,7 +93,8 @@ export function Details() {
                     status,
                     solution,
                     when: dateFormat(created_at),
-                    closed
+                    closed,
+                    uid
                 })
                 setIsLoading(false)
             })

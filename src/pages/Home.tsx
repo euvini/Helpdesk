@@ -20,6 +20,7 @@ export function Home() {
     const { colors } = useTheme()
     const navigation = useNavigation()
     const toast = useToast()
+    const user = auth().currentUser.uid
 
     function handleNewOrder() {
         navigation.navigate('newOrder')
@@ -58,16 +59,18 @@ export function Home() {
         const subscriber = firestore()
             .collection('Orders')
             .where('status', '==', statusSelected)
+            .where('uid', '==', user)
             .onSnapshot(snapshot => {
                 const data = snapshot.docs.map(doc => {
-                    const { patrimony, description, status, created_at } = doc.data()
+                    const { patrimony, description, status, created_at, uid } = doc.data()
 
                     return {
                         id: doc.id,
                         patrimony,
                         description,
                         status,
-                        when: dateFormat(created_at)
+                        when: dateFormat(created_at),
+                        uid
                     }
                 })
                 setOrders(data)

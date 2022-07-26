@@ -10,6 +10,7 @@ export type OrderProps = {
     patrimony: string
     when: string
     status: 'open' | 'closed'
+    uid: string
 }
 
 export default function Order({ data, ...rest }: Props) {

@@ -5,6 +5,7 @@ import Logo from '../assets/logo_primary.svg'
 import Input from '../components/Input'
 import { Envelope, Key } from 'phosphor-react-native'
 import Button from '../components/Button'
+import { useNavigation } from '@react-navigation/native'
 
 export default function SignIn() {
     const [isLoading, setIsLoading] = useState(false)
@@ -13,6 +14,7 @@ export default function SignIn() {
 
     const { colors } = useTheme()
     const toast = useToast()
+    const navigation = useNavigation()
 
     function handleSignIn() {
         if (!email || !password) {
@@ -99,15 +101,14 @@ export default function SignIn() {
                     title='Esqueci minha senha'
                     bg='transparent'
                     _pressed={{ bg: 'transparent' }}
-                    onPress={handleSignIn}
+                    onPress={() => navigation.navigate('signUp')}
                 />
                 <Button
                     title='Cadastrar'
                     bg='transparent'
                     _pressed={{ bg: 'transparent' }}
-                    onPress={handleSignIn}
+                    onPress={() => navigation.navigate('signUp')}
                 />
-
             </HStack>
         </VStack>
     )

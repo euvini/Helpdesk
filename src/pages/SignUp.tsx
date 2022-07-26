@@ -3,16 +3,20 @@ import React, { useState } from 'react'
 import auth from '@react-native-firebase/auth'
 import Logo from '../assets/logo_primary.svg'
 import Input from '../components/Input'
-import { Envelope, Key } from 'phosphor-react-native'
+import { Envelope, Eye, EyeSlash, Key, Phone } from 'phosphor-react-native'
 import Button from '../components/Button'
+import { useNavigation } from '@react-navigation/native'
 
 export default function SignUp() {
     const [isLoading, setIsLoading] = useState(false)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [validation, setValidation] = useState('')
 
     const { colors } = useTheme()
     const toast = useToast()
+
+    const navigation = useNavigation()
 
     function handleSignIn() {
         if (!email || !password) {
@@ -26,8 +30,19 @@ export default function SignUp() {
                 })
             )
         }
+        if (password != validation) {
+            return (
+                toast.show({
+                    render: () => {
+                        return <Box bg="red.400" px="2" py="1" rounded="sm" mb={5}>
+                            <Text color='white'>As senhas não combinam</Text>
+                        </Box>;
+                    }
+                })
+            )
+        }
         setIsLoading(true)
-        auth().signInWithEmailAndPassword(email, password)
+        auth().createUserWithEmailAndPassword(email, password)
             .catch((e) => {
                 setIsLoading(false)
                 if (e.code === 'auth/invalid-email') {
@@ -39,33 +54,27 @@ export default function SignUp() {
                         }
                     })
                 }
-                if (e.code === 'auth/user-disabled') {
+                if (e.code === 'auth/email-already-in-use') {
                     toast.show({
                         render: () => {
                             return <Box bg="red.400" px="2" py="1" rounded="sm" mb={5}>
-                                <Text color='white'>Usuário desativado</Text>
+                                <Text color='white'>E-mail já está em uso</Text>
                             </Box>;
                         }
                     })
                 }
-                if (e.code === 'auth/user-not-found') {
+                if (e.code === 'auth/weak-password') {
                     toast.show({
                         render: () => {
                             return <Box bg="red.400" px="2" py="1" rounded="sm" mb={5}>
-                                <Text color='white'>Usuário não encontrado</Text>
+                                <Text color='white'>Senha fraca, digite uma senha de no minimo 6 caracteres</Text>
                             </Box>;
                         }
                     })
                 }
-                if (e.code === 'auth/wrong-password') {
-                    toast.show({
-                        render: () => {
-                            return <Box bg="red.400" px="2" py="1" rounded="sm" mb={5}>
-                                <Text color='white'>Senha incorreta</Text>
-                            </Box>;
-                        }
-                    })
-                }
+            })
+            .then((response) => {
+                console.log(response)
             })
     }
 
@@ -73,26 +82,41 @@ export default function SignUp() {
         <VStack flex={1} alignItems='center' bg='gray.600' px={8} pt={24} >
             <Logo />
             <Heading color='gray.100' fontSize='xl' mt={20} mb={6} >
-                Acesse sua conta
+                Cadastro
             </Heading>
             <Input
-                placeholder='E-mail'
+                placeholder='E-mail corporativo'
                 mb={4}
                 InputLeftElement={<Icon as={<Envelope color={colors.gray[300]} />} ml={4} />}
                 onChangeText={setEmail}
             />
+
             <Input
                 placeholder='Senha'
-                mb={8}
+                mb={4}
                 InputLeftElement={<Icon as={<Key color={colors.gray[300]} />} ml={4} />}
                 onChangeText={setPassword}
-                secureTextEntry
+                type="password"
+            />
+            <Input
+                placeholder='Confirmar senha'
+                mb={8}
+                InputLeftElement={<Icon as={<Key color={colors.gray[300]} />} ml={4} />}
+                onChangeText={setValidation}
+                type="password"
             />
             <Button
-                title='Entrar'
+                title='Cadastrar'
                 w='full'
                 onPress={handleSignIn}
                 isLoading={isLoading}
+            />
+            <Button
+                title='Voltar'
+                mt={10}
+                bg='transparent'
+                _pressed={{ bg: 'transparent' }}
+                onPress={() => navigation.goBack()}
             />
         </VStack>
     )

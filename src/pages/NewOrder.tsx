@@ -1,5 +1,6 @@
 import { useTheme, VStack, useToast, Box, Text } from "native-base"
 import firestore from "@react-native-firebase/firestore"
+import auth  from "@react-native-firebase/auth"
 import { useNavigation } from '@react-navigation/native'
 import Button from "../components/Button"
 import { Header } from "../components/Header"
@@ -8,6 +9,7 @@ import { useState } from "react"
 
 export function NewOrder() {
     const navigation = useNavigation()
+    const user = auth().currentUser.uid
 
     const [isLoading, setIsLoading] = useState(false)
     const [patrimony, setPatrimony] = useState('')
@@ -32,7 +34,8 @@ export function NewOrder() {
                 patrimony,
                 description,
                 status: 'open',
-                created_at: firestore.FieldValue.serverTimestamp()
+                created_at: firestore.FieldValue.serverTimestamp(),
+                uid: user
             })
             .then(() => {
                 toast.show({

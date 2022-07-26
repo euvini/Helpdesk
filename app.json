@@ -17,15 +17,13 @@
     ],
     "android": {
       "package": "com.helpdesk",
-      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#202024"
       }
     },
     "ios": {
-      "bundleIdentifier": "com.helpdesk",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "bundleIdentifier": "com.helpdesk"
     }
   },
   "name": "Helpdesk"
